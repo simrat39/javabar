@@ -3,9 +3,9 @@ package simrat39.javabar;
 public class Bar {
 
     public static void update(){
-        String separator = "   /   ";
-        String right = "%{r}" + Time.gettimStatus() + separator + Network.getNetStatus() + separator + Volume.getvolStatus() + separator + Battery.getbatStatus() + "   ";
-        String left = "%{l}" + "   " + Datee.getdateeStatus();
+        String separator = "   |   ";
+        String right = "%{r}" + Network.getNetStatus() + separator + Volume.getvolStatus() + separator + Battery.getbatStatus() + "   ";
+        String left = "%{l}" + "   " + Datee.getdateeStatus() + separator + Time.gettimStatus();
         String center = "%{c}" + BSPWM.getBSPWMstatus();
         System.out.println(left+center+right);
     }
