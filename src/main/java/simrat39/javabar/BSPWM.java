@@ -49,6 +49,8 @@ public class BSPWM implements Runnable {
             } else if (i == 'o'){
                 final_output += "  "+x+"  ";
                 x++;
+            } else if (i == 'f'){
+                x++;
             }
         }
 
