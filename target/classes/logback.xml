@@ -1,0 +1,6 @@
+<!--  No Tomcat debug logs -->
+<configuration>
+    ...
+    <logger name="org.apache.catalina.core" level="OFF" />
+    ...
+</configuration>
