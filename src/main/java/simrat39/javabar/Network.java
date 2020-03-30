@@ -1,11 +1,9 @@
 package simrat39.javabar;
 
-import org.freedesktop.DBus;
 import org.freedesktop.dbus.connections.impl.DBusConnection;
 import org.freedesktop.dbus.exceptions.DBusException;
 import org.freedesktop.dbus.interfaces.Properties;
 
-import java.io.IOException;
 import java.util.ArrayList;
 
 public class Network implements Runnable {

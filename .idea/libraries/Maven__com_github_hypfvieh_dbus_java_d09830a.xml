@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="Maven: com.github.hypfvieh:dbus-java:d09830a">
+    <CLASSES>
+      <root url="jar://$MAVEN_REPOSITORY$/com/github/hypfvieh/dbus-java/d09830a/dbus-java-d09830a.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$MAVEN_REPOSITORY$/com/github/hypfvieh/dbus-java/d09830a/dbus-java-d09830a-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$MAVEN_REPOSITORY$/com/github/hypfvieh/dbus-java/d09830a/dbus-java-d09830a-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>
