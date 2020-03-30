@@ -41,16 +41,15 @@ public class BSPWM implements Runnable {
 
         String final_output = "";
 
-        String[] out_arr = socket_response.split(":");
-
         int x = 1; // counter
-        for (String i : Arrays.copyOfRange(out_arr,1,11)){
-            if (i.contains("O") || i.contains("F")){
+        for (char i : socket_response.toCharArray()){
+            if (i == 'O' || i == 'F'){
                 final_output +=  "  %{+u}" + x + "%{-u}  ";
-            } else if (i.contains("o")){
+                x++;
+            } else if (i == 'o'){
                 final_output += "  "+x+"  ";
+                x++;
             }
-            x += 1;
         }
 
         return final_output;
