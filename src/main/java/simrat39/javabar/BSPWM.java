@@ -9,6 +9,7 @@ import java.util.Arrays;
 public class BSPWM implements Runnable {
 
     static String bspwmStatus;
+    static String RawBSPWMstatus;
 
     public static String getBSPWMstatus() {
         return bspwmStatus;
@@ -16,6 +17,14 @@ public class BSPWM implements Runnable {
 
     public static void setBSPWMstatus(String newval) {
         bspwmStatus = newval;
+    }
+
+    public static String getRawBSPWMstatus() {
+        return RawBSPWMstatus;
+    }
+
+    public static void setRawBSPWMstatus(String newval) {
+        RawBSPWMstatus = newval;
     }
 
     public static void writeToSocket(String message, OutputStream os) throws IOException {
@@ -35,9 +44,7 @@ public class BSPWM implements Runnable {
         return sock;
     }
 
-    public static String BSPWMstatus(OutputStream os, InputStream is) throws IOException {
-        writeToSocket("wm\0--get-status\0",os);
-        String socket_response = readFromSocket(is);
+    public static String BSPWMstatus(OutputStream os, InputStream is, String socket_response) throws IOException {
 
         String final_output = "";
 
@@ -65,37 +72,23 @@ public class BSPWM implements Runnable {
             InputStream is = sock.getInputStream();
             OutputStream os = sock.getOutputStream();
 
-            // Initial Values
-            String status = BSPWMstatus(os,is);
-            setBSPWMstatus(status);
+            writeToSocket("subscribe\0", os);
 
-            Bar.update();
+            // Initial random value
+            setBSPWMstatus("1");
+            setRawBSPWMstatus("1");
 
-            sock.close();
-            os.close();
-            is.close();
-
-            // Change Checker
             while (true) {
-                AFUNIXSocket sock1 = createSocket(socketfile);
-
-                InputStream is1 = sock1.getInputStream();
-                OutputStream os1 = sock1.getOutputStream();
-                String newBSPWMstatus = BSPWMstatus(os1,is1);
-                if (!(newBSPWMstatus.equals(getBSPWMstatus()))) {
-                    setBSPWMstatus(newBSPWMstatus);
+                String socket_response = readFromSocket(is);
+                if (socket_response != getRawBSPWMstatus()){
+                    setBSPWMstatus(BSPWMstatus(os,is,socket_response));
                     Bar.update();
                 }
-                sock1.close();
-                is1.close();
-                os1.close();
-                try {
-                    Thread.sleep(150);
-                } catch (InterruptedException e) {
-                    // todo catch exception
-                }
+                setRawBSPWMstatus(socket_response);
+                Thread.sleep(150);
             }
-        } catch (IOException e) {
+
+        } catch (IOException | InterruptedException e) {
             e.printStackTrace();
         }
     }
