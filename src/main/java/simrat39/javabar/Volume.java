@@ -13,9 +13,8 @@ public class Volume implements Runnable {
     }
     
     public static String VolumeStatus() {
-        String status = Utils.runCommand("amixer get Master");
 
-        String icon = "";
+        String icon = "";
 
         String[] volumeCMD = {
             "dash",
@@ -24,12 +23,6 @@ public class Volume implements Runnable {
         };
 
         String volume = Utils.runCommand(volumeCMD);
-
-        if (status.contains("on")) {
-            icon = "";
-        } else if (status.contains("off")) {
-            icon = "";
-        }
 
         String finaloutput = icon + "  " + volume;
         return finaloutput;
