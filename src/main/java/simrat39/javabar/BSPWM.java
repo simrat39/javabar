@@ -4,7 +4,6 @@ import org.newsclub.net.unix.AFUNIXSocket;
 import org.newsclub.net.unix.AFUNIXSocketAddress;
 
 import java.io.*;
-import java.util.Arrays;
 
 public class BSPWM implements Runnable {
 

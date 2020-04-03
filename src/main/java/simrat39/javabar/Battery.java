@@ -23,15 +23,15 @@ public class Battery implements Runnable {
         if (status.equals("Full") || status.equals("Charging") || status.equals("Unknown")){
             icon = "";
         } else {
-            if (intCapacity > 80) {
+            if (intCapacity >= 80) {
                 icon = "";
             } else if (intCapacity > 60 & intCapacity < 80) {
                 icon = "";
-            } else if (intCapacity > 40 & intCapacity < 60) {
+            } else if (intCapacity > 40 & intCapacity <= 60) {
                 icon = "";
-            } else if (intCapacity > 20 & intCapacity < 40) {
+            } else if (intCapacity > 20 & intCapacity <= 40) {
                 icon = "";
-            } else if (intCapacity < 20) {
+            } else if (intCapacity <= 20) {
                 icon = "";
             }
         }   
