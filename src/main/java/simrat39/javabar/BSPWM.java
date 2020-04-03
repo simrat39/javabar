@@ -85,7 +85,7 @@ public class BSPWM implements Runnable {
                     Bar.update();
                 }
                 setRawBSPWMstatus(socket_response);
-                Thread.sleep(150);
+                Thread.sleep(300);
             }
 
         } catch (IOException | InterruptedException e) {
