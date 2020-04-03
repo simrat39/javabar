@@ -14,8 +14,8 @@ public class Network implements Runnable {
         return netStatus;
     }
 
-    public static void setNetStatus(String newval) {
-        netStatus = newval;
+    public static void setNetStatus(String netStatus) {
+        Network.netStatus = netStatus;
     }
     
     public static String networkStatus(DBusConnection conn, String busname) throws DBusException {
@@ -44,9 +44,9 @@ public class Network implements Runnable {
         String finaloutput = icon + "  " + connName;
         return finaloutput;
     }
-    
-    public void run() {
 
+    @Override
+    public void run() {
         try {
             DBusConnection conn = DBusConnection.getConnection(DBusConnection.DBusBusType.SYSTEM);
             String busname = "org.freedesktop.NetworkManager";

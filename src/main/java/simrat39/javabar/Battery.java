@@ -8,8 +8,8 @@ public class Battery implements Runnable {
         return batStatus;
     }
 
-    public static void setbatStatus(String newval) {
-        batStatus = newval;
+    public static void setbatStatus(String batStatus) {
+        Battery.batStatus = batStatus;
     }
     
     public static String batteryStatus() {
@@ -39,7 +39,8 @@ public class Battery implements Runnable {
         String finaloutput = icon + "  " + text;
         return finaloutput;
     }
-    
+
+    @Override
     public void run() {
         // Initial Values
         String status = batteryStatus();

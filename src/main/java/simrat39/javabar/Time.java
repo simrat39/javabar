@@ -11,8 +11,8 @@ public class Time implements Runnable {
         return timStatus;
     }
 
-    public static void settimStatus(String newval) {
-        timStatus = newval;
+    public static void settimStatus(String timStatus) {
+        Time.timStatus = timStatus;
     }
     
     public static String TimeStatus() {
@@ -21,9 +21,9 @@ public class Time implements Runnable {
         String finaloutput = datee;
         return finaloutput;
     }
-    
-    public void run() {
 
+    @Override
+    public void run() {
         // Initial Values
         String status = TimeStatus();
         settimStatus(status);
@@ -37,6 +37,7 @@ public class Time implements Runnable {
                 settimStatus(newTime);
                 Bar.update();
             }
+
             try {
                 Thread.sleep(60000); 
             } catch (InterruptedException e) {

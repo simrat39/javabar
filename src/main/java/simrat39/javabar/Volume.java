@@ -8,12 +8,11 @@ public class Volume implements Runnable {
         return volStatus;
     }
 
-    public static void setvolStatus(String newval) {
-        volStatus = newval;
+    public static void setvolStatus(String volStatus) {
+        Volume.volStatus = volStatus;
     }
     
     public static String VolumeStatus() {
-
         String icon = "";
 
         String[] volumeCMD = {
@@ -27,9 +26,9 @@ public class Volume implements Runnable {
         String finaloutput = icon + "  " + volume;
         return finaloutput;
     }
-    
-    public void run() {
 
+    @Override
+    public void run() {
         // Initial Values
         String status = VolumeStatus();
         setvolStatus(status);
@@ -43,6 +42,7 @@ public class Volume implements Runnable {
                 setvolStatus(newVolume);
                 Bar.update();
             }
+
             try {
                 Thread.sleep(1000); 
             } catch (InterruptedException e) {

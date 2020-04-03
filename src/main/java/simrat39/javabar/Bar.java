@@ -29,8 +29,8 @@ public class Bar {
         Thread BSPWM = new Thread(new BSPWM());
         BSPWM.start();
 
-      //  Thread spotify = new Thread(new Spotify());
-      //  spotify.start();
+       // Thread spotify = new Thread(new Spotify());
+       // spotify.start();
 
        // Thread i3 = new Thread(new Ithree());
        // i3.start();

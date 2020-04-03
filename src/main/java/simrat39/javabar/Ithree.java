@@ -8,8 +8,8 @@ public class Ithree implements Runnable {
         return i3Status;
     }
 
-    public static void seti3Status(String newval) {
-        i3Status = newval;
+    public static void seti3Status(String i3Status) {
+        Ithree.i3Status = i3Status;
     }
     
     public static String ithreeStatus() {
@@ -27,7 +27,8 @@ public class Ithree implements Runnable {
 
         return finaloutput;
     }
-    
+
+    @Override
     public void run() {
         // Initial Values
         String status = ithreeStatus();
@@ -42,7 +43,7 @@ public class Ithree implements Runnable {
                 seti3Status(newIthree);
                 Bar.update();
             }
-            
+
             try {
                 Thread.sleep(100); 
             } catch (InterruptedException e) {

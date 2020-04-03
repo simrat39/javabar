@@ -11,8 +11,8 @@ public class Datee implements Runnable {
         return dateeStatus;
     }
 
-    public static void setdateeStatus(String newval) {
-        dateeStatus = newval;
+    public static void setdateeStatus(String dateeStatus) {
+        Datee.dateeStatus = dateeStatus;
     }
     
     public static String DateeStatus() {
@@ -21,9 +21,9 @@ public class Datee implements Runnable {
         String finaloutput = datee;
         return finaloutput;
     }
-    
-    public void run() {
 
+    @Override
+    public void run() {
         // Initial Values
         String status = DateeStatus();
         setdateeStatus(status);
@@ -37,6 +37,7 @@ public class Datee implements Runnable {
                 setdateeStatus(newDatee);
                 Bar.update();
             }
+
             try {
                 Thread.sleep(60000); 
             } catch (InterruptedException e) {

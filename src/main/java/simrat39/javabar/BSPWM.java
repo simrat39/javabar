@@ -14,16 +14,16 @@ public class BSPWM implements Runnable {
         return bspwmStatus;
     }
 
-    public static void setBSPWMstatus(String newval) {
-        bspwmStatus = newval;
+    public static void setBSPWMstatus(String bspwmStatus) {
+        BSPWM.bspwmStatus = bspwmStatus;
     }
 
     public static String getRawBSPWMstatus() {
         return RawBSPWMstatus;
     }
 
-    public static void setRawBSPWMstatus(String newval) {
-        RawBSPWMstatus = newval;
+    public static void setRawBSPWMstatus(String RawBSPWMstatus) {
+        BSPWM.RawBSPWMstatus = RawBSPWMstatus;
     }
 
     public static void writeToSocket(String message, OutputStream os) throws IOException {
@@ -44,7 +44,6 @@ public class BSPWM implements Runnable {
     }
 
     public static String BSPWMstatus(OutputStream os, InputStream is, String socket_response) throws IOException {
-
         String final_output = "";
 
         int x = 1; // counter
@@ -63,10 +62,10 @@ public class BSPWM implements Runnable {
         return final_output;
     }
 
+    @Override
     public void run(){
         File socketfile = new File("/tmp/bspwm_0_0-socket");
         try {
-
             AFUNIXSocket sock = createSocket(socketfile);
             InputStream is = sock.getInputStream();
             OutputStream os = sock.getOutputStream();
@@ -86,7 +85,6 @@ public class BSPWM implements Runnable {
                 setRawBSPWMstatus(socket_response);
                 Thread.sleep(300);
             }
-
         } catch (IOException | InterruptedException e) {
             e.printStackTrace();
         }
