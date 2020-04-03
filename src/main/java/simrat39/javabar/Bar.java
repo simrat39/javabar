@@ -4,7 +4,7 @@ public class Bar {
 
     public static void update(){
         String separator = "   |   ";
-        String right = "%{r}" + Network.getNetStatus() + separator + Volume.getvolStatus() + separator + Battery.getbatStatus() + "   ";
+        String right = "%{r}" + Network.getNetStatus() + separator + Battery.getbatStatus() + "   ";
         String left = "%{l}" + "   " + Datee.getdateeStatus() + separator + Time.gettimStatus();
         String center = "%{c}" + BSPWM.getBSPWMstatus();
         System.out.println(left+center+right);
@@ -17,8 +17,8 @@ public class Bar {
         Thread bat = new Thread(new Battery());
         bat.start();
 
-        Thread vol = new Thread(new Volume());
-        vol.start();
+       // Thread vol = new Thread(new Volume());
+       // vol.start();
 
         Thread tim = new Thread(new Time());
         tim.start();
