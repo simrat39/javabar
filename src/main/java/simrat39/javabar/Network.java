@@ -4,10 +4,14 @@ import org.freedesktop.dbus.connections.impl.DBusConnection;
 import org.freedesktop.dbus.exceptions.DBusException;
 import org.freedesktop.dbus.interfaces.Properties;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class Network implements Runnable {
 
+    public Network(boolean showNetworkName){ Network.showNetworkName = showNetworkName; }
+
+    static boolean showNetworkName;
     static String netStatus;
 
     public static String getNetStatus() {
@@ -23,7 +27,7 @@ public class Network implements Runnable {
         String ethStatus = Utils.readFile("/sys/class/net/enp8s0/operstate");
         String connName = "";
 
-        if (wifiStatus.equals("up") || ethStatus.equals("up")) {
+        if ((wifiStatus.equals("up") || ethStatus.equals("up")) && showNetworkName) {
             Properties nm_prop_main = (Properties) conn.getRemoteObject(busname, "/org/freedesktop/NetworkManager", Properties.class);
             ArrayList active_connections_arr = nm_prop_main.Get(busname, "ActiveConnections");
             Properties nm_prop_active_device = (Properties) conn.getRemoteObject(busname, active_connections_arr.get(0).toString(), Properties.class);
@@ -41,7 +45,13 @@ public class Network implements Runnable {
             connName = "Disconnected";
         }
 
-        String finaloutput = icon + "  " + connName;
+        String finaloutput;
+
+        if (!showNetworkName) {
+            finaloutput = icon;
+        } else {
+            finaloutput = icon + "  " + connName;
+        }
         return finaloutput;
     }
 
@@ -50,6 +60,9 @@ public class Network implements Runnable {
         try {
             DBusConnection conn = DBusConnection.getConnection(DBusConnection.DBusBusType.SYSTEM);
             String busname = "org.freedesktop.NetworkManager";
+            if (!showNetworkName) {
+                conn.close();
+            }
 
             // Initial Values
             String status = networkStatus(conn,busname);
@@ -72,7 +85,7 @@ public class Network implements Runnable {
                 }
             }
             //conn.close();
-        } catch (DBusException e){
+        } catch (DBusException | IOException e){
             // todo
         }
     }

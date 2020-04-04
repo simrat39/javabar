@@ -11,7 +11,7 @@ public class Bar {
     }
 
     public static void main(String[] args) throws InterruptedException{
-        Thread net = new Thread(new Network());
+        Thread net = new Thread(new Network(false));
         net.start();
 
         Thread bat = new Thread(new Battery());
