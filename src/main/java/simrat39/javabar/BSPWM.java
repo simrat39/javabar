@@ -45,9 +45,12 @@ public class BSPWM implements Runnable {
 
     public static String BSPWMstatus(OutputStream os, InputStream is, String socket_response) throws IOException {
         String final_output = "";
+        String socket_response_other;
+
+        socket_response_other = socket_response.split("\n")[0];
 
         int x = 1; // counter
-        for (char i : socket_response.toCharArray()){
+        for (char i : socket_response_other.toCharArray()){
             if (i == 'O' || i == 'F'){
                 final_output +=  "  %{+u}" + x + "%{-u}  ";
                 x++;
@@ -83,7 +86,7 @@ public class BSPWM implements Runnable {
                     Bar.update();
                 }
                 setRawBSPWMstatus(socket_response);
-                Thread.sleep(300);
+                Thread.sleep(150);
             }
         } catch (IOException | InterruptedException e) {
             e.printStackTrace();
