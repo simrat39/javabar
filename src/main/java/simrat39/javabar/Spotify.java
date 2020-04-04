@@ -2,6 +2,7 @@ package simrat39.javabar;
 
 import org.freedesktop.dbus.DBusMap;
 import org.freedesktop.dbus.connections.impl.DBusConnection;
+import org.freedesktop.dbus.errors.ServiceUnknown;
 import org.freedesktop.dbus.exceptions.DBusException;
 import org.freedesktop.dbus.interfaces.Properties;
 
@@ -18,13 +19,18 @@ public class Spotify implements Runnable {
     }
 
     public static String SpotifyStatus(DBusConnection conn, String busname) throws DBusException {
-        Properties metadata = (Properties) conn.getRemoteObject(busname, "/org/mpris/MediaPlayer2", Properties.class);
-        DBusMap spotify_map = metadata.Get("org.mpris.MediaPlayer2.Player", "Metadata");
-        String artist = spotify_map.get("xesam:artist").toString().replace("[","").replace("]","");
-        String title = spotify_map.get("xesam:title").toString();
-        String icon = "\uF025";
-        String final_out = icon + "  " + artist + " : " + title;
-        return  final_out;
+        String final_out;
+        try {
+            Properties metadata = (Properties) conn.getRemoteObject(busname, "/org/mpris/MediaPlayer2", Properties.class);
+            DBusMap spotify_map = metadata.Get("org.mpris.MediaPlayer2.Player", "Metadata");
+            String artist = spotify_map.get("xesam:artist").toString().replace("[", "").replace("]", "");
+            String title = spotify_map.get("xesam:title").toString();
+            String icon = "\uF025";
+            final_out = icon + "  " + artist + " : " + title;
+        } catch (ServiceUnknown e) {
+            final_out = "";
+        }
+        return final_out;
     }
 
     @Override
