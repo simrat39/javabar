@@ -5,7 +5,7 @@ public class Bar {
     public static void update(){
         String separator = "   |   ";
         String right = "%{r}" + Network.getNetStatus() + separator + Battery.getbatStatus() + "   ";
-        String left = "%{l}" + "   " + Datee.getdateeStatus() + separator + Time.gettimStatus() + separator + Spotify.getSpotifyStatus();
+        String left = "%{l}" + "   " + Datee.getdateeStatus() + separator + Time.gettimStatus();
         String center = "%{c}" + BSPWM.getBSPWMstatus();
         System.out.println(left+center+right);
     }
@@ -27,9 +27,6 @@ public class Bar {
 
         Thread BSPWM = new Thread(new BSPWM());
         BSPWM.start();
-
-        Thread Spotify = new Thread(new Spotify());
-        Spotify.start();
 
         // Thread vol = new Thread(new Volume());
         // vol.start();

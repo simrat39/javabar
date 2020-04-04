@@ -2,6 +2,7 @@ package simrat39.javabar;
 
 import org.freedesktop.dbus.DBusMap;
 import org.freedesktop.dbus.connections.impl.DBusConnection;
+import org.freedesktop.dbus.errors.NoReply;
 import org.freedesktop.dbus.errors.ServiceUnknown;
 import org.freedesktop.dbus.exceptions.DBusException;
 import org.freedesktop.dbus.interfaces.Properties;
@@ -27,7 +28,7 @@ public class Spotify implements Runnable {
             String title = spotify_map.get("xesam:title").toString();
             String icon = "\uF025";
             final_out = icon + "  " + artist + " : " + title;
-        } catch (ServiceUnknown e) {
+        } catch (ServiceUnknown | NoReply e) {
             final_out = "";
         }
         return final_out;
