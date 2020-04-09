@@ -3,20 +3,14 @@ package simrat39.javabar;
 import org.newsclub.net.unix.AFUNIXSocket;
 import org.newsclub.net.unix.AFUNIXSocketAddress;
 
-import java.io.*;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.io.IOException;
+import java.io.File;
 
 public class BSPWM implements Runnable {
 
-    static String bspwmStatus;
     static String RawBSPWMstatus;
-
-    public static String getBSPWMstatus() {
-        return bspwmStatus;
-    }
-
-    public static void setBSPWMstatus(String bspwmStatus) {
-        BSPWM.bspwmStatus = bspwmStatus;
-    }
 
     public static String getRawBSPWMstatus() {
         return RawBSPWMstatus;
@@ -43,8 +37,18 @@ public class BSPWM implements Runnable {
         return sock;
     }
 
-    public static String BSPWMstatus(OutputStream os, InputStream is, String socket_response) throws IOException {
-        String final_output = "";
+    static String status;
+
+    public static String getStatus() {
+        return status;
+    }
+
+    public static void setStatus(String status) {
+        BSPWM.status = status;
+    }
+
+    public static String giveStatus(OutputStream os, InputStream is, String socket_response) throws IOException {
+        StringBuilder final_output = new StringBuilder();
         String socket_response_other;
 
         socket_response_other = socket_response.split("\n")[0];
@@ -52,17 +56,17 @@ public class BSPWM implements Runnable {
         int x = 1; // counter
         for (char i : socket_response_other.toCharArray()){
             if (i == 'O' || i == 'F'){
-                final_output +=  "  %{+u}" + x + "%{-u}  ";
+                final_output.append("  %{+u}").append(x).append("%{-u}  ");
                 x++;
             } else if (i == 'o'){
-                final_output += "  "+x+"  ";
+                final_output.append("  ").append(x).append("  ");
                 x++;
             } else if (i == 'f'){
                 x++;
             }
         }
 
-        return final_output;
+        return String.valueOf(final_output);
     }
 
     @Override
@@ -76,13 +80,13 @@ public class BSPWM implements Runnable {
             writeToSocket("subscribe\0", os);
 
             // Initial random value
-            setBSPWMstatus("1");
+            setStatus("1");
             setRawBSPWMstatus("1");
 
             while (true) {
                 String socket_response = readFromSocket(is);
                 if (socket_response != getRawBSPWMstatus()){
-                    setBSPWMstatus(BSPWMstatus(os,is,socket_response));
+                    setStatus(giveStatus(os,is,socket_response));
                     Bar.update();
                 }
                 setRawBSPWMstatus(socket_response);

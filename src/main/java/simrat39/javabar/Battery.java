@@ -2,17 +2,17 @@ package simrat39.javabar;
 
 public class Battery implements Runnable {
 
-    static String batStatus;
+    static String status;
 
-    public static String getbatStatus() {
-        return batStatus;
+    public static String getStatus() {
+        return status;
     }
 
-    public static void setbatStatus(String batStatus) {
-        Battery.batStatus = batStatus;
+    public static void setStatus(String status) {
+        Battery.status = status;
     }
     
-    public static String batteryStatus() {
+    public static String giveStatus() {
         String status = Utils.readFile("/sys/class/power_supply/BAT0/status");
         String capacity = Utils.readFile("/sys/class/power_supply/BAT0/capacity");
         String icon = "";
@@ -25,34 +25,33 @@ public class Battery implements Runnable {
         } else {
             if (intCapacity >= 80) {
                 icon = "";
-            } else if (intCapacity > 60 & intCapacity < 80) {
+            } else if (intCapacity > 60) {
                 icon = "";
-            } else if (intCapacity > 40 & intCapacity <= 60) {
+            } else if (intCapacity > 40) {
                 icon = "";
-            } else if (intCapacity > 20 & intCapacity <= 40) {
+            } else if (intCapacity > 20) {
                 icon = "";
-            } else if (intCapacity <= 20) {
+            } else {
                 icon = "";
             }
-        }   
+        }
 
-        String finaloutput = icon + "  " + text;
-        return finaloutput;
+        return icon + "  " + text;
     }
 
     @Override
     public void run() {
         // Initial Values
-        String status = batteryStatus();
-        setbatStatus(status);
+        String status = giveStatus();
+        setStatus(status);
 
         Bar.update();
 
         // Change Checker
         while (true){
-            String newBattery = batteryStatus();
-            if (!(newBattery.equals(getbatStatus()))) {
-                setbatStatus(newBattery);
+            String newStatus = giveStatus();
+            if (!(newStatus.equals(getStatus()))) {
+                setStatus(newStatus);
                 Bar.update();
             }
             

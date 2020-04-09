@@ -9,17 +9,17 @@ import org.freedesktop.dbus.interfaces.Properties;
 
 public class Spotify implements Runnable {
 
-    static String spotifyStatus;
+    static String status;
 
-    public static String getSpotifyStatus() {
-        return spotifyStatus;
+    public static String getStatus() {
+        return status;
     }
 
-    public static void setSpotifyStatus(String spotifyStatus) {
-        Spotify.spotifyStatus = spotifyStatus;
+    public static void setStatus(String status) {
+        Spotify.status = status;
     }
 
-    public static String SpotifyStatus(DBusConnection conn, String busname) throws DBusException {
+    public static String giveStatus(DBusConnection conn, String busname) throws DBusException {
         String final_out;
         try {
             Properties metadata = (Properties) conn.getRemoteObject(busname, "/org/mpris/MediaPlayer2", Properties.class);
@@ -41,13 +41,13 @@ public class Spotify implements Runnable {
             String busname = "org.mpris.MediaPlayer2.spotify";
 
             // Initial values
-            String status = SpotifyStatus(conn,busname);
-            setSpotifyStatus(status);
+            String status = giveStatus(conn,busname);
+            setStatus(status);
 
             while (true) {
-                String newStatus = SpotifyStatus(conn,busname);
-                if (!(newStatus.equals(getSpotifyStatus()))) {
-                    setSpotifyStatus(newStatus);
+                String newStatus = giveStatus(conn,busname);
+                if (!(newStatus.equals(getStatus()))) {
+                    setStatus(newStatus);
                     Bar.update();
                 }
 

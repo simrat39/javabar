@@ -12,25 +12,25 @@ public class Network implements Runnable {
     public Network(boolean showNetworkName){ Network.showNetworkName = showNetworkName; }
 
     static boolean showNetworkName;
-    static String netStatus;
+    static String status;
 
-    public static String getNetStatus() {
-        return netStatus;
+    public static String getStatus() {
+        return status;
     }
 
-    public static void setNetStatus(String netStatus) {
-        Network.netStatus = netStatus;
+    public static void setStatus(String status) {
+        Network.status = status;
     }
     
-    public static String networkStatus(DBusConnection conn, String busname) throws DBusException {
+    public static String giveStatus(DBusConnection conn, String busname) throws DBusException {
         String wifiStatus = Utils.readFile("/sys/class/net/wlp7s0/operstate");
         String ethStatus = Utils.readFile("/sys/class/net/enp8s0/operstate");
         String connName = "";
 
         if ((wifiStatus.equals("up") || ethStatus.equals("up")) && showNetworkName) {
-            Properties nm_prop_main = (Properties) conn.getRemoteObject(busname, "/org/freedesktop/NetworkManager", Properties.class);
+            Properties nm_prop_main = conn.getRemoteObject(busname, "/org/freedesktop/NetworkManager", Properties.class);
             ArrayList active_connections_arr = nm_prop_main.Get(busname, "ActiveConnections");
-            Properties nm_prop_active_device = (Properties) conn.getRemoteObject(busname, active_connections_arr.get(0).toString(), Properties.class);
+            Properties nm_prop_active_device = conn.getRemoteObject(busname, active_connections_arr.get(0).toString(), Properties.class);
             connName = nm_prop_active_device.Get("org.freedesktop.NetworkManager.Connection.Active", "Id");
         }
 
@@ -65,16 +65,16 @@ public class Network implements Runnable {
             }
 
             // Initial Values
-            String status = networkStatus(conn,busname);
-            setNetStatus(status);
+            String status = giveStatus(conn,busname);
+            setStatus(status);
 
             Bar.update();
 
             // Change Checker
             while (true){
-                String newNetwork = networkStatus(conn,busname);
-                if (!(newNetwork.equals(getNetStatus()))) {
-                    setNetStatus(newNetwork);
+                String newStatus = giveStatus(conn,busname);
+                if (!(newStatus.equals(getStatus()))) {
+                    setStatus(newStatus);
                     Bar.update();
                 }
 

@@ -1,9 +1,6 @@
 package simrat39.javabar;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
-
-public class Time implements Runnable {
+public class I3 implements Runnable {
 
     static String status;
 
@@ -12,13 +9,23 @@ public class Time implements Runnable {
     }
 
     public static void setStatus(String status) {
-        Time.status = status;
+        I3.status = status;
     }
     
     public static String giveStatus() {
-        SimpleDateFormat i = new SimpleDateFormat("hh:mm aa");
-        String time = i.format(new Date()).toString();
-        return time;
+        int[] current_workspaces = Utils.getCurrenWorkspaces();
+        int active_workspace = Utils.getActiveWorkspace();
+        StringBuilder finaloutput = new StringBuilder();
+
+        for (int i: current_workspaces){
+            if (i == active_workspace){
+                finaloutput.append("   %{+u}").append(i).append("%{-u}  ");
+            } else {
+                finaloutput.append("   ").append(i).append("  ");
+            }
+        }
+
+        return String.valueOf(finaloutput);
     }
 
     @Override
@@ -38,9 +45,9 @@ public class Time implements Runnable {
             }
 
             try {
-                Thread.sleep(60000); 
+                Thread.sleep(100); 
             } catch (InterruptedException e) {
-                e.printStackTrace();
+                System.out.println(e.getStackTrace());
             }
         }
     }

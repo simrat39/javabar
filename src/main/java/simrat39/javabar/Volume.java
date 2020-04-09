@@ -2,17 +2,17 @@ package simrat39.javabar;
 
 public class Volume implements Runnable {
 
-    static String volStatus;
+    static String status;
 
-    public static String getvolStatus() {
-        return volStatus;
+    public static String getStatus() {
+        return status;
     }
 
-    public static void setvolStatus(String volStatus) {
-        Volume.volStatus = volStatus;
+    public static void setStatus(String volStatus) {
+        Volume.status = status;
     }
     
-    public static String VolumeStatus() {
+    public static String giveStatus() {
         String icon = "";
 
         String[] volumeCMD = {
@@ -23,30 +23,29 @@ public class Volume implements Runnable {
 
         String volume = Utils.runCommand(volumeCMD);
 
-        String finaloutput = icon + "  " + volume;
-        return finaloutput;
+        return icon + "  " + volume;
     }
 
     @Override
     public void run() {
         // Initial Values
-        String status = VolumeStatus();
-        setvolStatus(status);
+        String status = giveStatus();
+        setStatus(status);
 
         Bar.update();
 
         // Change Checker
         while (true){
-            String newVolume = VolumeStatus();
-            if (!(newVolume.equals(getvolStatus()))) {
-                setvolStatus(newVolume);
+            String newStatus = giveStatus();
+            if (!(newStatus.equals(getStatus()))) {
+                setStatus(newStatus);
                 Bar.update();
             }
 
             try {
                 Thread.sleep(1000); 
             } catch (InterruptedException e) {
-                // todo catch exception
+                e.printStackTrace();
             }
         }
     }

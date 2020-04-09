@@ -4,9 +4,9 @@ public class Bar {
 
     public static void update(){
         String separator = "   |   ";
-        String right = "%{r}" + Network.getNetStatus() + separator + Battery.getbatStatus() + "   ";
-        String left = "%{l}" + "   " + Datee.getdateeStatus() + separator + Time.gettimStatus();
-        String center = "%{c}" + BSPWM.getBSPWMstatus();
+        String right = "%{r}" + Network.getStatus() + separator + Battery.getStatus() + "   ";
+        String left = "%{l}" + "   " + Datee.getStatus() + separator + Time.getStatus();
+        String center = "%{c}" + BSPWM.getStatus();
         System.out.println(left+center+right);
     }
 
