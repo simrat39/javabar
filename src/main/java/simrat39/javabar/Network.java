@@ -5,13 +5,21 @@ import org.freedesktop.dbus.exceptions.DBusException;
 import org.freedesktop.dbus.interfaces.Properties;
 
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 
 public class Network implements Runnable {
 
-    public Network(boolean showNetworkName){ Network.showNetworkName = showNetworkName; }
-
     static boolean showNetworkName;
+
+    static {
+        try {
+            showNetworkName = Boolean.parseBoolean(Bar.readProperties("network.showNetworkName","false"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     static String status;
 
     public static String getStatus() {
@@ -85,8 +93,8 @@ public class Network implements Runnable {
                 }
             }
             //conn.close();
-        } catch (DBusException | IOException e){
-            // todo
+        } catch (DBusException | IOException | InvocationTargetException | NoSuchMethodException | IllegalAccessException | ClassNotFoundException e){
+            e.printStackTrace();
         }
     }
 }

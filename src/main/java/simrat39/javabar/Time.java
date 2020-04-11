@@ -1,5 +1,6 @@
 package simrat39.javabar;
 
+import java.lang.reflect.InvocationTargetException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -27,14 +28,22 @@ public class Time implements Runnable {
         String status = giveStatus();
         setStatus(status);
 
-        Bar.update();
+        try {
+            Bar.update();
+        } catch (ClassNotFoundException | IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
+            e.printStackTrace();
+        }
 
         // Change Checker
         while (true){
             String newStatus = giveStatus();
             if (!(newStatus.equals(getStatus()))) {
                 setStatus(newStatus);
-                Bar.update();
+                try {
+                    Bar.update();
+                } catch (ClassNotFoundException | NoSuchMethodException | InvocationTargetException | IllegalAccessException e) {
+                    e.printStackTrace();
+                }
             }
 
             try {

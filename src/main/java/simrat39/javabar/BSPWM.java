@@ -7,6 +7,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.IOException;
 import java.io.File;
+import java.lang.reflect.InvocationTargetException;
 
 public class BSPWM implements Runnable {
 
@@ -92,7 +93,7 @@ public class BSPWM implements Runnable {
                 setRawBSPWMstatus(socket_response);
                 Thread.sleep(150);
             }
-        } catch (IOException | InterruptedException e) {
+        } catch (IOException | InterruptedException | InvocationTargetException | NoSuchMethodException | IllegalAccessException | ClassNotFoundException e) {
             e.printStackTrace();
         }
     }

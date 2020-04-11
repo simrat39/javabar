@@ -1,5 +1,7 @@
 package simrat39.javabar;
 
+import java.lang.reflect.InvocationTargetException;
+
 public class Volume implements Runnable {
 
     static String status;
@@ -11,7 +13,7 @@ public class Volume implements Runnable {
     public static void setStatus(String volStatus) {
         Volume.status = status;
     }
-    
+
     public static String giveStatus() {
         String icon = "";
 
@@ -32,14 +34,22 @@ public class Volume implements Runnable {
         String status = giveStatus();
         setStatus(status);
 
-        Bar.update();
+        try {
+            Bar.update();
+        } catch (ClassNotFoundException | IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
+            e.printStackTrace();
+        }
 
         // Change Checker
         while (true){
             String newStatus = giveStatus();
             if (!(newStatus.equals(getStatus()))) {
                 setStatus(newStatus);
-                Bar.update();
+                try {
+                    Bar.update();
+                } catch (ClassNotFoundException | IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
+                    e.printStackTrace();
+                }
             }
 
             try {

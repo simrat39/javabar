@@ -7,6 +7,8 @@ import org.freedesktop.dbus.errors.ServiceUnknown;
 import org.freedesktop.dbus.exceptions.DBusException;
 import org.freedesktop.dbus.interfaces.Properties;
 
+import java.lang.reflect.InvocationTargetException;
+
 public class Spotify implements Runnable {
 
     static String status;
@@ -57,8 +59,8 @@ public class Spotify implements Runnable {
                     // todo catch exception
                 }
             }
-        } catch (DBusException e) {
-            // todo
+        } catch (DBusException | InvocationTargetException | NoSuchMethodException | IllegalAccessException | ClassNotFoundException e) {
+            e.printStackTrace();
         }
     }
 }
