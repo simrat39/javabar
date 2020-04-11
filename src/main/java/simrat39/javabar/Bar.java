@@ -29,7 +29,8 @@ public class Bar {
             for (String i : left_modules) {
                 Class c = Class.forName("simrat39.javabar." + i);
                 Method method = c.getMethod("getStatus");
-                left += left_modules[left_modules.length - 1] == i ? method.invoke(c) : method.invoke(c) + separator;
+                String output = (String)method.invoke(c);
+                left += left_modules[0] == i || (output == null || output.length() == 0) ? output : separator + output;
             }
         }
 
@@ -37,7 +38,8 @@ public class Bar {
             for (String i : right_modules) {
                 Class c = Class.forName("simrat39.javabar." + i);
                 Method method = c.getMethod("getStatus");
-                right += right_modules[right_modules.length - 1] == i ? method.invoke(c) : method.invoke(c) + separator;
+                String output = (String)method.invoke(c);
+                right += right_modules[0] == i || (output == null || output.length() == 0) ? output : separator + output;
             }
         }
 
@@ -47,11 +49,12 @@ public class Bar {
             for (String i : center_modules) {
                 Class c = Class.forName("simrat39.javabar." + i);
                 Method method = c.getMethod("getStatus");
-                center += center_modules[center_modules.length - 1] == i ? method.invoke(c) : method.invoke(c) + separator;
+                String output = (String)method.invoke(c);
+                center += center_modules[0] == i || (output == null || output.length() == 0) ? output : separator + output;
             }
         }
 
-        System.out.println(left + right + center);
+        System.out.println(left + center + right);
     }
 
     public static String readProperties(String property, String defaultVal) throws IOException {
