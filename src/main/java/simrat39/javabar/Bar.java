@@ -67,7 +67,7 @@ public class Bar {
         right_modules = readProperties("modules-right","").split(" ");
         center_modules = readProperties("modules-center","").split(" ");
 
-        separator = readProperties("seperator","  |  ");
+        separator = Utils.removeFirstLastElement(readProperties("seperator","\"   |   \""));
 
         for (int i=0;i<Integer.parseInt(readProperties("padding-left","0"));i++) {
             left_padding += " ";

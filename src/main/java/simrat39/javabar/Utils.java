@@ -72,4 +72,15 @@ class Utils {
         int ws = Integer.parseInt(ws_str);
         return ws;
     }
+
+    public static String removeFirstLastElement(String str){
+        String final_str = "";
+        for (int i = 0; i<str.length(); i++) {
+            if (i == 0 || i == str.length()-1) {
+                continue;
+            }
+            final_str += str.charAt(i);
+        }
+        return final_str;
+    }
 }
