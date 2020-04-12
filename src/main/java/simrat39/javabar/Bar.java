@@ -25,32 +25,38 @@ public class Bar {
 
         left += left_padding;
 
-        if (left_modules.length != 0) {
+        if (left_modules[0] != "") {
             for (String i : left_modules) {
                 Class c = Class.forName("simrat39.javabar." + i);
                 Method method = c.getMethod("getStatus");
                 String output = (String)method.invoke(c);
-                left += left_modules[0] == i || (output == null || output.length() == 0) ? output : separator + output;
+                if (output != null) {
+                    left += left_modules[0] == i || (output.length() == 0) ? output : separator + output;
+                }
             }
         }
 
-        if (right_modules.length != 0) {
+        if (right_modules[0] != "") {
             for (String i : right_modules) {
                 Class c = Class.forName("simrat39.javabar." + i);
                 Method method = c.getMethod("getStatus");
                 String output = (String)method.invoke(c);
-                right += right_modules[0] == i || (output == null || output.length() == 0) ? output : separator + output;
+                if (output != null) {
+                    right += right_modules[0] == i || (output.length() == 0) ? output : separator + output;
+                }
             }
         }
 
         right += right_padding;
 
-        if (center_modules.length != 0) {
+        if (center_modules[0] != "") {
             for (String i : center_modules) {
                 Class c = Class.forName("simrat39.javabar." + i);
                 Method method = c.getMethod("getStatus");
                 String output = (String)method.invoke(c);
-                center += center_modules[0] == i || (output == null || output.length() == 0) ? output : separator + output;
+                if (output != null) {
+                    center += center_modules[0] == i || (output == null || output.length() == 0) ? output : separator + output;
+                }
             }
         }
 
