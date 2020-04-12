@@ -25,42 +25,30 @@ public class Bar {
 
         left += left_padding;
 
-        if (left_modules[0] != "") {
-            for (String i : left_modules) {
-                Class c = Class.forName("simrat39.javabar." + i);
-                Method method = c.getMethod("getStatus");
-                String output = (String)method.invoke(c);
-                if (output != null) {
-                    left += left_modules[0] == i || (output.length() == 0) ? output : separator + output;
-                }
-            }
-        }
+        left += setOutputString(left_modules);
 
-        if (right_modules[0] != "") {
-            for (String i : right_modules) {
-                Class c = Class.forName("simrat39.javabar." + i);
-                Method method = c.getMethod("getStatus");
-                String output = (String)method.invoke(c);
-                if (output != null) {
-                    right += right_modules[0] == i || (output.length() == 0) ? output : separator + output;
-                }
-            }
-        }
-
+        right += setOutputString(right_modules);
         right += right_padding;
 
-        if (center_modules[0] != "") {
-            for (String i : center_modules) {
+        center += setOutputString(center_modules);
+
+        System.out.println(left + center + right);
+    }
+
+    public static String setOutputString(String[] position) throws InvocationTargetException, IllegalAccessException, NoSuchMethodException, ClassNotFoundException {
+        if (position[0] != "") {
+            String final_out = "";
+            for (String i : position) {
                 Class c = Class.forName("simrat39.javabar." + i);
                 Method method = c.getMethod("getStatus");
                 String output = (String)method.invoke(c);
                 if (output != null) {
-                    center += center_modules[0] == i || (output == null || output.length() == 0) ? output : separator + output;
+                    final_out += position[0] == i || (output == null || output.length() == 0) ? output : separator + output;
                 }
             }
+            return final_out;
         }
-
-        System.out.println(left + center + right);
+        return "";
     }
 
     public static String readProperties(String property, String defaultVal) throws IOException {
