@@ -54,19 +54,23 @@ public class BSPWM implements Runnable {
 
         socket_response_other = socket_response.split("\n")[0];
 
+        int numOfWorkspaces = Integer.parseInt(Bar.readProperties("bspwm.numberOfWorkspaces" , "10"));
         int x = 1; // counter
-        for (char i : socket_response_other.toCharArray()){
-            if (i == 'O' || i == 'F'){
+
+        for (String i : socket_response_other.split(":")) {
+            if (x > numOfWorkspaces) {
+                break;
+            }
+            if (i.charAt(0) == 'O' || i.charAt(0) == 'F'){
                 final_output.append("  %{+u}").append(x).append("%{-u}  ");
                 x++;
-            } else if (i == 'o'){
-                final_output.append("  ").append(x).append("  ");
+            } else if (i.charAt(0) == 'o'){
+                final_output.append("%{A:bspc desktop -f " + x + ":}").append("  ").append(x).append("  ").append("%{A}");
                 x++;
-            } else if (i == 'f'){
+            } else if (i.charAt(0) == 'f'){
                 x++;
             }
         }
-
         return String.valueOf(final_output);
     }
 
